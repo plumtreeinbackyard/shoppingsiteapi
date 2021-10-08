@@ -51,7 +51,7 @@ namespace shoppingsiteapi
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()
-                    .WithOrigins("https://localhost:5001");
+                    .WithOrigins("https://localhost:5001","https://shrouded-sea-23221.herokuapp.com");
                 });
             });
 
@@ -70,18 +70,18 @@ namespace shoppingsiteapi
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "shoppingsiteapi v1"));
             }
-
-            app.UseCors("VueCorsPolicy");
-
+            
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors("VueCorsPolicy");
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers().RequireCors("VueCorsPolicy");
             });
         }
     }
