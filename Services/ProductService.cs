@@ -37,5 +37,12 @@ namespace shoppingsiteapi.Services
 
         public void Remove(string id) => 
             _products.DeleteOne(product => product.Id == id);
+
+        public void UpdateInventory(string id, decimal inventory)
+        {
+            var item = this.Get(id);
+            item.Inventory = inventory;
+            this.Update(id, item);
+        }
     }
 }
