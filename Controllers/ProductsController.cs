@@ -3,7 +3,6 @@ using shoppingsiteapi.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Cors;
 
 namespace shoppingsiteapi.Controllers
 {
@@ -18,11 +17,13 @@ namespace shoppingsiteapi.Controllers
             _productService = productService;
         }
 
+        // Get all products
         // GET: api/Products
         [HttpGet]
         public ActionResult<List<Product>> Get() =>
             _productService.Get();
 
+        // Get one product
         // GET: api/Products/id
         [HttpGet("{id:length(24)}", Name = "GetProduct")]
         public ActionResult<Product> Get(string id)
@@ -37,6 +38,7 @@ namespace shoppingsiteapi.Controllers
             return product;
         }
 
+        // Add a new product to database
         // POST: api/Products
         [Authorize]
         [HttpPost]
@@ -47,7 +49,9 @@ namespace shoppingsiteapi.Controllers
             return CreatedAtRoute("GetProduct", new { id = product.Id.ToString() }, product);
         }
 
+        // Update a product
         // PUT: api/Products/id
+        [Authorize]
         [HttpPut("{id:length(24)}")]
         public IActionResult Update(string id, Product productIn)
         {
@@ -63,7 +67,9 @@ namespace shoppingsiteapi.Controllers
             return NoContent();
         }
 
+        // Delete a product
         // DELETE: api/Products/id
+        [Authorize]
         [HttpDelete("{id:length(24)}")]
         public IActionResult Delete(string id)
         {
@@ -79,14 +85,15 @@ namespace shoppingsiteapi.Controllers
             return NoContent();
         }
 
+        // Update cart products' inventory
+        [Authorize]
         [HttpPut("updateinventory")] 
         public IActionResult UpdateInventory(CartItem[] cartItems)
         {
-            // Console.WriteLine(cartItems[0]);
-            // return NoContent();
             for (int i = 0; i < cartItems.Length; i++) {
                 
                 var product = _productService.Get(cartItems[i].Id);
+
                 if (product == null)
                 {
                     return NotFound();
@@ -94,6 +101,7 @@ namespace shoppingsiteapi.Controllers
                 var newInventory = product.Inventory - cartItems[i].Quantity;               
                 _productService.UpdateInventory(cartItems[i].Id, newInventory);                
             }
+
             return NoContent();
         }
     }
