@@ -1,8 +1,9 @@
 using shoppingsiteapi.Models;
 using shoppingsiteapi.Services;
-using System;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Cors;
 
 namespace shoppingsiteapi.Controllers
 {
@@ -37,6 +38,7 @@ namespace shoppingsiteapi.Controllers
         }
 
         // POST: api/Products
+        [Authorize]
         [HttpPost]
         public ActionResult<Product> Create(Product product)
         {
