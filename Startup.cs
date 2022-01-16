@@ -53,7 +53,7 @@ namespace shoppingsiteapi
                     .AllowAnyHeader()
                     .AllowAnyMethod()
                     .AllowCredentials()
-                    .WithOrigins("https://localhost:5001","https://shrouded-sea-23221.herokuapp.com","https://shoppingsiteclientvue3.herokuapp.com");
+                    .WithOrigins("https://localhost:5001","https://shoppingsiteclientvue3.herokuapp.com","https://shoppingsiteclientokta.herokuapp.com");
                 });
             });
 
