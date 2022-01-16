@@ -87,7 +87,7 @@ namespace shoppingsiteapi.Controllers
 
         // Update cart products' inventory
         [Authorize]
-        [HttpPut("updateinventory")] 
+        [HttpPost("updateinventory")] 
         public IActionResult UpdateInventory(CartItem[] cartItems)
         {
             for (int i = 0; i < cartItems.Length; i++) {
